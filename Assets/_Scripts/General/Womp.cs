@@ -1,5 +1,4 @@
 using System;
-using Dreamteck.Splines;
 using UnityEngine;
 
 public class Womp : MonoBehaviour
@@ -15,12 +14,14 @@ public class Womp : MonoBehaviour
         if (other.gameObject.CompareTag("Obstacle"))
             Death();
         if (other.gameObject.CompareTag("Bonus"))
+        {
+            Destroy(other.gameObject);
             GetBonusEvent?.Invoke();
+        }
     }
 
     private void Death()
     {
-        GetComponent<SplineFollower>().enabled = false;
         DeathEvent?.Invoke(this);
         Vector3 pos = new Vector3(transform.position.x,
             transform.position.y + 0.3f,

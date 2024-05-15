@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Dreamteck.Splines;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -8,14 +7,23 @@ public class Player : MonoBehaviour
 
     public static Player Instance { get; private set; }
 
-    private int _bonus = 0;
+    private int _bonus;
     
     public bool CanDraw { get; private set; }
+
+    private void Awake()
+    {
+        Instance = this;
+
+        foreach (Transform child in transform)
+        {
+            if (child.TryGetComponent(out Womp womp))
+                _womps.Add(womp);
+        }
+    }
     
     private void Start()
     {
-        Instance = this;
-        
         foreach (var womp in _womps)
         {
             womp.DeathEvent += OnWompDeth;
