@@ -1,12 +1,16 @@
 ﻿using System.Collections.Generic;
+using Dreamteck.Splines;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
     [SerializeField] private List<Womp> _womps = new();
-    public Player Instance { get; private set; }
+
+    public static Player Instance { get; private set; }
 
     private int _bonus = 0;
+    
+    public bool CanDraw { get; private set; }
     
     private void Start()
     {
@@ -18,6 +22,10 @@ public class Player : MonoBehaviour
             womp.GetBonusEvent += OnBonusGet;
         }
     }
+
+    public void OnInputRectPointerDown() => CanDraw = true;
+
+    public void OnInputRectPointerExit() => CanDraw = false;
 
     private void OnBonusGet()
     {
@@ -33,9 +41,9 @@ public class Player : MonoBehaviour
         if (_womps.Count <= 0)
             GameOver();
     }
-    
+  
     private void GameOver()
     {
-        Debug.Log("You lox");
+        Debug.Log("Ты есть лох");
     }
 }
