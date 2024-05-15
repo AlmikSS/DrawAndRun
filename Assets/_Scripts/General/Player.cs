@@ -5,9 +5,8 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     [SerializeField] private List<Womp> _womps = new();
+    [SerializeField] private GameObject _restartCanvas;
     
-    private int _bonus;
-
     public List<Womp> Womps => _womps;
     
     private void Awake()
@@ -24,14 +23,7 @@ public class Player : MonoBehaviour
         foreach (var womp in _womps)
         {
             womp.DeathEvent += OnWompDeth;
-            womp.GetBonusEvent += OnBonusGet;
         }
-    }
-
-    private void OnBonusGet()
-    {
-        _bonus++;
-        Debug.Log(_bonus);
     }
 
     private void OnWompDeth(Womp womp)
@@ -45,7 +37,7 @@ public class Player : MonoBehaviour
   
     private void GameOver()
     {
-        Debug.Log("Ты есть лох");
         GetComponent<SplineFollower>().enabled = false;
+        _restartCanvas.SetActive(true);
     }
 }

@@ -32,6 +32,9 @@ public class DrawingLines : MonoBehaviour
     {
         Debug.Log("constract");
 
+        if (!GameManager.Instance.GameStarted)
+            GameManager.Instance.StartGame();
+        
         int index = 0;
 
         foreach (var womp in _player.Womps)
@@ -50,8 +53,6 @@ public class DrawingLines : MonoBehaviour
                         y = womp.transform.position.y,
                         z = hit.point.z
                     };
-                    // GameObject gm = Instantiate(_point, pos, Quaternion.identity, _player.transform);
-                    // StartCoroutine(womp.Move(gm.transform));
                     womp.transform.position = pos;
                     index += a;
                 }
@@ -63,8 +64,6 @@ public class DrawingLines : MonoBehaviour
                         y = womp.transform.position.y,
                         z = hit.point.z
                     };
-                    // GameObject gm = Instantiate(_point, pos, Quaternion.identity, _player.transform);
-                    // StartCoroutine(womp.Move(gm.transform));
                     womp.transform.position = pos;
                     index++;
                 }
