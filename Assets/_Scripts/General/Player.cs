@@ -1,20 +1,17 @@
 ﻿using System.Collections.Generic;
+using Dreamteck.Splines;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
     [SerializeField] private List<Womp> _womps = new();
-
-    public static Player Instance { get; private set; }
-
-    private int _bonus;
     
-    public bool CanDraw { get; private set; }
+    private int _bonus;
 
+    public List<Womp> Womps => _womps;
+    
     private void Awake()
     {
-        Instance = this;
-
         foreach (Transform child in transform)
         {
             if (child.TryGetComponent(out Womp womp))
@@ -30,10 +27,6 @@ public class Player : MonoBehaviour
             womp.GetBonusEvent += OnBonusGet;
         }
     }
-
-    public void OnInputRectPointerDown() => CanDraw = true;
-
-    public void OnInputRectPointerExit() => CanDraw = false;
 
     private void OnBonusGet()
     {
@@ -53,5 +46,6 @@ public class Player : MonoBehaviour
     private void GameOver()
     {
         Debug.Log("Ты есть лох");
+        GetComponent<SplineFollower>().enabled = false;
     }
 }
